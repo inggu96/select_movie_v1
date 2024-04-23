@@ -34,10 +34,10 @@ const PreviewModal = ({ onModalClose, movieId }) => {
 
   const {
     title,
-    postImage,
+    posterPath,
     runtime,
     releasedAt,
-    plot,
+    overview,
     actors,
     genres,
     staffs,
@@ -97,17 +97,17 @@ const PreviewModal = ({ onModalClose, movieId }) => {
     }
   };
 
-  const modalVariants = {
-    hidden: {
-      y: 150,
-      opacity: 0,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', delayduration: 0.5, bounce: 0.4 },
-    },
-  };
+  // const modalVariants = {
+  //   hidden: {
+  //     y: 150,
+  //     opacity: 0,
+  //   },
+  //   visible: {
+  //     y: 0,
+  //     opacity: 1,
+  //     transition: { type: 'spring', delayduration: 0.5, bounce: 0.4 },
+  //   },
+  // };
 
   useEffect(() => {
     fetchMovieData();
@@ -119,13 +119,13 @@ const PreviewModal = ({ onModalClose, movieId }) => {
     <main>
       <div className={styles.modal} onClick={onModalClose} />
       <div ref={modalRef} className={styles.popup} style={{ zIndex: 999 }}>
-        <img className={styles.popupBackground} src={postImage} alt={title} />
-        <motion.div variants={modalVariants} initial="hidden" animate="visible">
+        <img className={styles.popupBackground} src={posterPath} alt={title} />
+        <div>
           <div className={styles.headerContentWrap}>
             <div className={styles.leftWrap}>
               <img
                 className={styles.thumbUrl}
-                src={postImage}
+                src={posterPath}
                 alt="detailPoster"
               />
               <div className={styles.buttonWrap}>
@@ -150,45 +150,45 @@ const PreviewModal = ({ onModalClose, movieId }) => {
               </div>
             </div>
             <div className={styles.rightWrap}>
-              <header>
+              {/* <header>
                 <span className={styles.title}>{title}</span>
                 <span className={styles.runtime}>{runtime}분 |</span>
                 <span>{dayjs(releasedAt).format('YYYY.MM.DD')}</span>
-              </header>
+              </header> */}
               <section className={styles.info}>
                 <article>
                   <h3>장르</h3>
-                  <p className={styles.genres}>
+                  {/* <p className={styles.genres}>
                     {genres.map((genre) => {
                       return <span key={genre.id}>{genre.name}</span>;
                     })}
-                  </p>
+                  </p> */}
                 </article>
                 <article>
                   <h3>줄거리</h3>
-                  <p className={styles.plot}>{plot}</p>
+                  <p className={styles.plot}>{overview}</p>
                 </article>
                 <article>
                   <h3>출연</h3>
-                  <p className={styles.staffs}>
+                  {/* <p className={styles.staffs}>
                     {actors.map((actor) => {
                       return <span key={actor.id}> {actor.name} </span>;
                     })}
-                  </p>
+                  </p> */}
                 </article>
                 <article>
                   <h3>제작 / 스태프</h3>
-                  <p className={styles.staffs}>
+                  {/* <p className={styles.staffs}>
                     <span> {company} | </span>
                     {staffs.map((staff) => {
                       return <span key={staff.id}>{staff.name}</span>;
                     })}
-                  </p>
+                  </p> */}
                 </article>
               </section>
             </div>
           </div>
-        </motion.div>
+        </div>
         <p className={styles.close} onClick={onModalClose}>
           <Close />
         </p>

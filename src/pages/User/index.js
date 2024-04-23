@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 import styles from './user.module.scss';
 import UserInfo from './UserInfo';
 import UserInfoDetail from './UserInfoDetail';
-import { UserCarousel } from '../../components';
+
 import UserReview from './UserReview';
 import { getUserDetail } from '../../api/Users';
+import { UserCarousel } from '../Home/Carousel/UserCarousel';
 
 const User = () => {
   const userId = useParams();

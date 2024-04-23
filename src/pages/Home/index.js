@@ -1,38 +1,45 @@
-import { motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
-import { getMovies } from '../../api/Movies';
-import { HomeCarousel, RankingCarousel } from '../../components/Carousel';
+import React from 'react';
+
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import { HomeCarousel } from './Carousel/HomeCarousel';
+import { RankingCarousel } from './Carousel/RankingCarousel';
 import styles from './home.module.scss';
 import RankingTitle from './RankingTitle';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-const Variants = {
-  initial: {
-    opacity: 0,
-    y: 200,
-    transition: {
-      duration: 0.5,
-    },
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
 
 const Home = () => {
+  // const fetchMovies = async () => {
+  //   try {
+  //     const response = await getMovies();
+  //     console.log('패치된 데이터', response.data);
+  //     setMoviesTop({ data: response.data }); // API 응답을 moviesGenre 상태에 저장
+  //   } catch (error) {
+  //     console.error(
+  //       '장르별 영화 데이터를 가져오는 중 오류가 발생했습니다:',
+  //       error,
+  //     );
+  //     setMoviesTop({ data: [] }); // 오류 발생 시 moviesGenre를 빈 배열로 초기화
+  //   }
+  // };
+
+  // const fetchMoviesGenre = async () => {
+  //   try {
+  //     const response = await getMoviesGenre(1, GenreId);
+  //     console.log('responseAction', response.data);
+  //     setMoviesGenre({ data: response.data }); // API 응답을 moviesGenre 상태에 저장
+  //   } catch (error) {
+  //     console.error(
+  //       '장르별 영화 데이터를 가져오는 중 오류가 발생했습니다:',
+  //       error,
+  //     );
+  //     setMoviesGenre({ data: [] }); // 오류 발생 시 moviesGenre를 빈 배열로 초기화
+  //   }
+  // };
+
   return (
     <section className={styles.wrapper}>
       <RankingTitle />
-      <motion.div
-        variants={Variants}
-        initial="initial"
-        animate="visible"
-        style={{ damping: 100 }}
-      >
+      <div>
         <article className={styles.ranking}>
           <RankingCarousel />
         </article>
@@ -73,7 +80,7 @@ const Home = () => {
           </h2>
           <HomeCarousel GenreId="360b5842-fc83-4ea9-a7fa-0d62017b975b" />
         </article>
-      </motion.div>
+      </div>
     </section>
   );
 };

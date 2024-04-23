@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './mypage.module.scss';
 import Info from './Info';
 import InfoDetail from './InfoDetail';
-import { UserCarousel } from '../../components/Carousel';
+
 import ReviewBox from './ReviewBox';
+import { UserCarousel } from '../Home/Carousel/HomeCarousel';
 
 const MyPage = () => {
   return (

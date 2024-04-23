@@ -1,19 +1,17 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
-import { getBookmarksPage, getUserBookmarksPage } from '../../api/Bookmarks';
-import { PosterCategory, PosterRanking } from './PosterHome';
-import { PosterUser } from './PosterUser';
-import PreviewModal from './PreviewModal';
-import styles from './rankingCarousel.module.scss';
+import { getBookmarksPage, getUserBookmarksPage } from '../../../api/Bookmarks';
+import { PosterCategory } from '../../../components/Carousel/PosterHome';
+import { PosterUser } from '../../../components/Carousel/PosterUser';
+import PreviewModal from '../../../components/Carousel/PreviewModal';
+import styles from './carousel.module.scss';
 
 import {
-  getMovies,
   getMoviesGenre,
   getMoviesMeLike,
   getMoviesUserLike,
-} from '../../api/Movies';
+} from '../../../api/Movies';
 
 import {
   CaretLeftIcon,
@@ -22,100 +20,7 @@ import {
   ChevronRightIcon,
   SolidBookmarkIcon,
   SolidHeartIcon,
-} from '../../assets/icon';
-
-export const RankingCarousel = () => {
-  const [isShow, setIsShow] = useState(false);
-  const [moviesTop, setMoviesTop] = useState({ data: [] });
-  const [movieId, setMovieId] = useState(null);
-  const onModalClose = () => setIsShow(false);
-
-  const fetchMovies = async () => {
-    try {
-      const response = await getMovies();
-      console.log('패치된 데이터', response.data);
-      setMoviesTop({ data: response.data }); // API 응답을 moviesGenre 상태에 저장
-    } catch (error) {
-      console.error(
-        '장르별 영화 데이터를 가져오는 중 오류가 발생했습니다:',
-        error,
-      );
-      setMoviesTop({ data: [] }); // 오류 발생 시 moviesGenre를 빈 배열로 초기화
-    }
-  };
-
-  const onModalClick = (id) => {
-    const num = moviesTop.data.findIndex((item) => item.id === id);
-    setIsShow(true);
-    setMovieId(moviesTop.data[num]);
-  };
-
-  const [slideIndex, setSlideIndex] = useState(0);
-
-  const settings = {
-    centerMode: true,
-    centerPadding: '0px',
-    dot: false,
-    arrow: false,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    slidesToShow: 3,
-    beforeChange: (current, next) => setSlideIndex(next),
-  };
-
-  useEffect(() => {
-    fetchMovies();
-  }, []);
-
-  return (
-    <>
-      <AnimatePresence>
-        {isShow && (
-          <div className={styles.overlay}>
-            <motion.div
-              variants={modalVariants}
-              initial="initial"
-              animate="visible"
-              exit="leaving"
-              style={{ zIndex: 999 }}
-            >
-              <PreviewModal
-                onModalClose={onModalClose}
-                onModalClick={onModalClick}
-                movieId={movieId}
-              />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-      <div className={styles.ranking}>
-        <div className={styles.slider}>
-          <Slider {...settings}>
-            {moviesTop?.data.map((movie, idx) => (
-              <div
-                key={movie.id}
-                className={
-                  idx === slideIndex ? styles.slideActive : styles.slideBefore
-                }
-              >
-                <p className={styles.rankingNum}>{idx + 1}</p>
-                <PosterRanking
-                  key={movie.id}
-                  title={movie.title}
-                  id={movie.id}
-                  posterImage={movie.posterPath}
-                  average={movie.voteAverage}
-                  onModalClick={() => onModalClick(movie.id)}
-                />
-              </div>
-            ))}
-          </Slider>
-        </div>
-      </div>
-    </>
-  );
-};
+} from '../../../assets/icon';
 
 export const HomeCarousel = ({ GenreId }) => {
   // 모달 관련 변수
@@ -158,60 +63,21 @@ export const HomeCarousel = ({ GenreId }) => {
     fetchMoviesGenre();
   }, [GenreId]);
 
-  const modalVariants = {
-    initial: {
-      opacity: 0,
-      position: 'fixed',
-      top: '-100vh',
-      left: '50%',
-      transform: 'translate(-50%, 0) scale(0.8)',
-      transition: {
-        duration: 0.2,
-      },
-    },
-    visible: {
-      opacity: 1,
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%) scale(1)',
-      transition: {
-        duration: 0.2,
-      },
-    },
-    leaving: {
-      opacity: 0,
-      position: 'fixed',
-      top: '-100vh',
-      left: '50%',
-      transform: 'translate(-50%, 0) scale(0.8)',
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
-
   return (
     <>
-      <AnimatePresence>
+      <>
         {isShow && (
           <div className={styles.overlay}>
-            <motion.div
-              variants={modalVariants}
-              initial="initial"
-              animate="visible"
-              exit="leaving"
-              style={{ zIndex: 999 }}
-            >
+            <div>
               <PreviewModal
                 onModalClose={onModalClose}
                 onModalClick={onModalClick}
                 movieId={movieId}
               />
-            </motion.div>
+            </div>
           </div>
         )}
-      </AnimatePresence>
+      </>
       <Slider {...settings}>
         {moviesGenre?.data.map((movie) => (
           <PosterCategory

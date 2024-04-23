@@ -63,6 +63,8 @@ const Login = () => {
         localStorage.setItem('ACCESS_TOKEN', accessToken);
         localStorage.setItem('REFRESH_TOKEN', refreshToken);
 
+        console.log(response.data);
+
         setIsLogin(true);
 
         if (!location.state) {

@@ -15,7 +15,7 @@ const SearchCard = ({ movieId, title, averageScore = 0, postImage }) => {
         <span className={styles.score}>
           <SolidStarIcon />
           {averageScore?.toFixed(1)}
-        </span>
+        </span> 
         <h2 className={styles.title}>{title}</h2>
       </div>
     </article>

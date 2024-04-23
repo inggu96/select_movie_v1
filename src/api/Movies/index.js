@@ -1,15 +1,32 @@
+import axios from 'axios';
 import apiClient from '../apiClient';
 
-// 영화목록 불러오기
-export const getMovies = (page, limit, title) => {
-  return apiClient.get(`/movies`, {
-    params: {
-      page,
-      limit,
-      title,
-    },
-  });
+//영화목록 불러오기
+export const getMovies = () => {
+  return apiClient.get('/movies');
 };
+
+// export const getMovies = async () => {
+//   try {
+//     const response = await axios.get('http://localhost:8000/movies');
+//     console.log('response', response);
+//     return response.data;
+//   } catch (error) {
+//     console.error('API 호출 중 오류 발생:', error);
+//     throw error;
+//   }
+// };
+
+// export const fetchMovies = async () => {
+//   try {
+//     const response = await apiClient.get('/movies');
+//     console.log('response', response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('API 호출 중 오류 발생:', error);
+//     throw error;
+//   }
+// };
 
 // 영화 전체 개수 불러오기
 export const getMoviesCount = () => {

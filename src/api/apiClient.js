@@ -3,16 +3,18 @@ import config from '../config';
 
 const apiClient = axios.create({
   baseURL: config.API_URL,
-  timeout: 8_000,
+  //NOTE :  요청 타임아웃 설정
+  timeout: 5_000,
 });
-
+//NOTE :  요청 인터셉터 추가
 apiClient.interceptors.request.use(async (config) => {
+  //NOTE :  요청을 보내기전 수정할 로직
   //NOTE: AccessToken 가져오기
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  // const accessToken = localStorage.getItem('ACCESS_TOKEN');
 
-  if (accessToken) {
-    config.headers['Authorization'] = `Bearer ${accessToken}`;
-  }
+  // if (accessToken) {
+  //   config.headers['Authorization'] = `Bearer ${accessToken}`;
+  // }
 
   //NOTE: 필수!!
   return config;

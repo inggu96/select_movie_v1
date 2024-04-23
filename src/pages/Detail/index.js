@@ -34,7 +34,7 @@ const Detail = () => {
     value: 'CREATED_AT',
   });
 
-  // 해당 영화 '관련 영화' fetch
+  // 해당 영화 '관련 영화' fetchc
   const fetchRelatedMovies = async () => {
     const response = await getMoviesRelated(id);
     const relatedArr = response.data.filter((related) => related.id !== id);

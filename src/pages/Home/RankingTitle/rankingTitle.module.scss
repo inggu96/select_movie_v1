@@ -11,7 +11,7 @@
     @include m.flex();
     height: 220px;
     font-size: 70px;
-    animation: flicker 1.5s infinite alternate;
+    animation: flicker .5s infinite alternate;
     border: 0.2rem solid #fff;
     border-radius: 2rem;
     flex-direction: column;

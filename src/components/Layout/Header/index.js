@@ -8,8 +8,8 @@ import useMe from '../../../hooks/useMe';
 import styles from './header.module.scss';
 
 const Header = () => {
-  const navigate = useNavigate();
-  const { me } = useMe();
+  // const navigate = useNavigate(); // useNaviagte 로그인 및 마이페이지 이동위해 사용
+  // const { me } = useMe();
 
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const [keyword, setKeyword] = useState('');
@@ -25,22 +25,22 @@ const Header = () => {
     location.reload();
   };
 
-  const onClickSearch = (e) => {
-    if (keyword.length === 0) {
-      e.preventDefault();
-      return alert('검색어를 입력해주세요 :)');
-    }
-    navigate(`/search/${keyword}`);
-    setKeyword('');
-  };
+  // const onClickSearch = (e) => {
+  //   if (keyword.length === 0) {
+  //     e.preventDefault();
+  //     return alert('검색어를 입력해주세요 :)');
+  //   }
+  //   navigate(`/search/${keyword}`);
+  //   setKeyword('');
+  // };
 
-  useEffect(() => {
-    if (me) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  }, [me]);
+  // useEffect(() => {
+  //   if (me) {
+  //     setIsLogin(true);
+  //   } else {
+  //     setIsLogin(false);
+  //   }
+  // }, [me]);
 
   return (
     <header className={styles.wrap}>
@@ -53,7 +53,7 @@ const Header = () => {
           option="iconLocation"
           className={styles.searchInput}
           placeholder="검색어를 입력하세요."
-          onClick={onClickSearch}
+          // onClick={onClickSearch}
           onChange={onChange}
           value={keyword}
         />

@@ -9,12 +9,18 @@ import { SolidStarIcon, HeartIcon, SolidHeartIcon } from '../../../assets/icon';
 
 export const PosterRanking = ({
   title,
-  postImage,
+  posterImage,
   onModalClick,
   id,
+  average,
   movie,
 }) => {
   const onClick = () => onModalClick(id);
+
+  // useEffect(() => {
+  //   console.log('title', title);
+  //   console.log('postImage', postImage);
+  // });
 
   return (
     <div className={styles.wrapperR} onClick={onClick}>
@@ -24,14 +30,12 @@ export const PosterRanking = ({
           <div className={styles.bottomR}>
             <div className={styles.ratingR}>
               <SolidStarIcon className={styles.starR} />
-              <p className={styles.starNumR}>
-                {movie.averageScore?.toFixed(1)}
-              </p>
+              <p className={styles.starNumR}>{average?.toFixed(1)}</p>
             </div>
           </div>
         </article>
         <article className={styles.layerDownR}>
-          <img className={styles.postImageR} src={postImage} alt={title} />
+          <img className={styles.postImageR} src={posterImage} alt={title} />
         </article>
       </div>
     </div>
@@ -96,7 +100,7 @@ export const PosterCategory = ({ movie, onModalClick }) => {
         <article className={styles.layerDownH}>
           <img
             className={styles.postImageH}
-            src={movie?.postImage}
+            src={movie?.poster_path}
             alt={movie?.title}
           />
         </article>

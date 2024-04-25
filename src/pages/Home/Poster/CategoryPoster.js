@@ -2,58 +2,23 @@ import React, { useState, useEffect } from 'react';
 import styles from './posterHome.module.scss';
 import { useRecoilValue } from 'recoil';
 import { isLoginAtom } from '../../../state';
-import Button from '../../Common/Button';
+import Button from '../../../components/Common/Button';
 
 import { getMovie, postMovieLike, deleteMovieLike } from '../../../api/Movies';
 import { SolidStarIcon, HeartIcon, SolidHeartIcon } from '../../../assets/icon';
 
-export const PosterRanking = ({
-  title,
-  posterImage,
-  onModalClick,
-  id,
-  average,
-  movie,
-}) => {
-  const onClick = () => onModalClick(id);
-
-  // useEffect(() => {
-  //   console.log('title', title);
-  //   console.log('postImage', postImage);
-  // });
-
-  return (
-    <div className={styles.wrapperR} onClick={onClick}>
-      <div className={styles.screenR}>
-        <article className={styles.layerUpR}>
-          <div className={styles.titleR}>{title}</div>
-          <div className={styles.bottomR}>
-            <div className={styles.ratingR}>
-              <SolidStarIcon className={styles.starR} />
-              <p className={styles.starNumR}>{average?.toFixed(1)}</p>
-            </div>
-          </div>
-        </article>
-        <article className={styles.layerDownR}>
-          <img className={styles.postImageR} src={posterImage} alt={title} />
-        </article>
-      </div>
-    </div>
-  );
-};
-
-export const PosterCategory = ({ movie, onModalClick }) => {
+export const CategoryPoster = ({ movie, onModalClick }) => {
   const isLogin = useRecoilValue(isLoginAtom);
   const [isLiked, setIsLiked] = useState(false);
 
-  const fetchMovieData = async () => {
-    const response = await getMovie(movie.id);
-    if (isLogin) {
-      setIsLiked(response.data.isLiked);
-    } else {
-      setIsLiked(false);
-    }
-  };
+  // const fetchMovieData = async () => {
+  //   const response = await getMovie(movie.id);
+  //   if (isLogin) {
+  //     setIsLiked(response.data.isLiked);
+  //   } else {
+  //     setIsLiked(false);
+  //   }
+  // };
 
   const onClickLike = async (e) => {
     if (!isLogin) {
@@ -65,9 +30,9 @@ export const PosterCategory = ({ movie, onModalClick }) => {
 
   const onClick = () => onModalClick(movie?.id);
 
-  useEffect(() => {
-    fetchMovieData();
-  }, [movie.id]);
+  // useEffect(() => {
+  //   fetchMovieData();
+  // }, [movie.id]);
 
   return (
     <article className={styles.wrapperH}>

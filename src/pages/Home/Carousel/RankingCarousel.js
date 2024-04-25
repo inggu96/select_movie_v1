@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import { PosterRanking } from '../../../components/Carousel/PosterHome';
 import PreviewModal from '../../../components/Carousel/PreviewModal';
 import styles from './carousel.module.scss';
 
 import { getMovies } from '../../../api/Movies';
+import { RankingPoster } from '../Poster/RankingPoster';
+import { useNavigate } from 'react-router-dom';
+import { RankingModal } from '../Modal/RankingModal';
+import { RankingModal2 } from '../Modal/RankingModal2';
+import useModal from '../../../hooks/useModal';
 
 export const RankingCarousel = () => {
-  const [isShow, setIsShow] = useState(false);
   const [moviesTop, setMoviesTop] = useState({ data: [] });
   const [movieId, setMovieId] = useState(null);
-  const onModalClose = () => setIsShow(false);
+  const navigate = useNavigate();
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const fetchMovies = async () => {
     try {
@@ -27,9 +32,10 @@ export const RankingCarousel = () => {
   };
 
   const onModalClick = (id) => {
+    navigate(`/movies/${id}`);
+    openModal();
     const num = moviesTop.data.findIndex((item) => item.id === id);
-    setIsShow(true);
-    setMovieId(moviesTop.data[num]);
+    setMovieId(id);
   };
 
   const [slideIndex, setSlideIndex] = useState(0);
@@ -52,19 +58,18 @@ export const RankingCarousel = () => {
 
   return (
     <>
-      <>
-        {isShow && (
-          <div className={styles.overlay}>
-            <div>
-              <PreviewModal
+      <div className={styles.overlay}>
+        <div>
+          {/* <RankingModal
                 onModalClose={onModalClose}
                 onModalClick={onModalClick}
                 movieId={moviesTop?.data}
-              />
-            </div>
-          </div>
-        )}
-      </>
+              /> */}
+          {isModalOpen && (
+            <RankingModal open={isModalOpen} onClose={closeModal} />
+          )}
+        </div>
+      </div>
       <div className={styles.ranking}>
         <div className={styles.slider}>
           <Slider {...settings}>
@@ -76,10 +81,11 @@ export const RankingCarousel = () => {
                 }
               >
                 <p className={styles.rankingNum}>{idx + 1}</p>
-                <PosterRanking
+                <RankingPoster
                   key={movie.id}
                   title={movie.title}
                   id={movie.id}
+                  movieId={movie.id}
                   posterImage={movie.posterPath}
                   average={movie.voteAverage}
                   onModalClick={() => onModalClick(movie.id)}

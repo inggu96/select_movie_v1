@@ -6,27 +6,10 @@ export const getMovies = () => {
   return apiClient.get('/movies');
 };
 
-// export const getMovies = async () => {
-//   try {
-//     const response = await axios.get('http://localhost:8000/movies');
-//     console.log('response', response);
-//     return response.data;
-//   } catch (error) {
-//     console.error('API 호출 중 오류 발생:', error);
-//     throw error;
-//   }
-// };
-
-// export const fetchMovies = async () => {
-//   try {
-//     const response = await apiClient.get('/movies');
-//     console.log('response', response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error('API 호출 중 오류 발생:', error);
-//     throw error;
-//   }
-// };
+// 영화 자세히 불러오기
+export const getMovie = (id) => {
+  return apiClient.get(`/movies/${id}`);
+};
 
 // 영화 전체 개수 불러오기
 export const getMoviesCount = () => {
@@ -84,7 +67,7 @@ export const getMoviesCategory = () => {
 };
 
 // 영화 자세히 불러오기
-export const getMovie = (id) => {
+export const getMovieDetail = (id) => {
   return apiClient.get(`/movies/${id}/detail`);
 };
 

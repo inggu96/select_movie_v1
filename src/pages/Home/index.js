@@ -2,43 +2,16 @@ import React from 'react';
 
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import { Banner } from './Banner';
+
 import { HomeCarousel } from './Carousel/HomeCarousel';
 import { RankingCarousel } from './Carousel/RankingCarousel';
 import styles from './home.module.scss';
-import RankingTitle from './RankingTitle';
 
 const Home = () => {
-  // const fetchMovies = async () => {
-  //   try {
-  //     const response = await getMovies();
-  //     console.log('패치된 데이터', response.data);
-  //     setMoviesTop({ data: response.data }); // API 응답을 moviesGenre 상태에 저장
-  //   } catch (error) {
-  //     console.error(
-  //       '장르별 영화 데이터를 가져오는 중 오류가 발생했습니다:',
-  //       error,
-  //     );
-  //     setMoviesTop({ data: [] }); // 오류 발생 시 moviesGenre를 빈 배열로 초기화
-  //   }
-  // };
-
-  // const fetchMoviesGenre = async () => {
-  //   try {
-  //     const response = await getMoviesGenre(1, GenreId);
-  //     console.log('responseAction', response.data);
-  //     setMoviesGenre({ data: response.data }); // API 응답을 moviesGenre 상태에 저장
-  //   } catch (error) {
-  //     console.error(
-  //       '장르별 영화 데이터를 가져오는 중 오류가 발생했습니다:',
-  //       error,
-  //     );
-  //     setMoviesGenre({ data: [] }); // 오류 발생 시 moviesGenre를 빈 배열로 초기화
-  //   }
-  // };
-
   return (
     <section className={styles.wrapper}>
-      <RankingTitle />
+      <Banner />
       <div>
         <article className={styles.ranking}>
           <RankingCarousel />

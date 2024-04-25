@@ -4,7 +4,7 @@ import Info from './Info';
 import InfoDetail from './InfoDetail';
 
 import ReviewBox from './ReviewBox';
-import { UserCarousel } from '../Home/Carousel/HomeCarousel';
+import { UserCarousel } from '../Home/Carousel/UserCarousel';
 
 const MyPage = () => {
   return (

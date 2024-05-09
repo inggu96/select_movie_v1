@@ -63,7 +63,10 @@ export const RankingModal = ({ open, onClose, movieId }) => {
       setMovie(response.data);
       console.log('response', response.data);
     } catch (error) {
-      console.error('영화 정보를 가져오는 중 오류가 발생했습니1111다:', error);
+      console.error(
+        '영화 정보를 가져오는 중 오류가 발생했습니111111다:',
+        error,
+      );
     }
   };
 

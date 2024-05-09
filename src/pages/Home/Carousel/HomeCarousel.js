@@ -19,19 +19,19 @@ export const HomeCarousel = ({ GenreId }) => {
     try {
       const response = await getMoviesGenre(1, GenreId);
       console.log('responseAction', response.data);
-      setMoviesGenre({ data: response.data }); // API 응답을 moviesGenre 상태에 저장
+      setMoviesGenre({ data: response.data });
     } catch (error) {
       console.error(
         '장르별 영화 데이터를 가져오는 중 오류가 발생했습니다:',
         error,
       );
-      setMoviesGenre({ data: [] }); // 오류 발생 시 moviesGenre를 빈 배열로 초기화
+      setMoviesGenre({ data: [] });
     }
   };
   const onModalClick = (id) => {
-    const num = moviesGenre.data.findIndex((item) => item.id === id); // id값 추출
+    const num = moviesGenre.data.findIndex((item) => item.id === id);
     setIsShow(true);
-    setMovieId(moviesGenre.data[num]); //data값에 아이디값 대입
+    setMovieId(moviesGenre.data[num]);
   };
 
   const settings = {

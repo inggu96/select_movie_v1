@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import PreviewModal from '../../../components/Carousel/PreviewModal';
 import styles from './carousel.module.scss';
 
-import { getMovies } from '../../../api/Movies';
-import { RankingPoster } from '../Poster/RankingPoster';
 import { useNavigate } from 'react-router-dom';
-import { RankingModal } from '../Modal/RankingModal';
-import { RankingModal2 } from '../Modal/RankingModal2';
+import { getMovies } from '../../../api/Movies';
 import useModal from '../../../hooks/useModal';
+import { RankingModal } from '../Modal/RankingModal';
+import { RankingPoster } from '../Poster/RankingPoster';
 
 export const RankingCarousel = () => {
   const [moviesTop, setMoviesTop] = useState({ data: [] });
@@ -21,13 +19,13 @@ export const RankingCarousel = () => {
     try {
       const response = await getMovies();
       console.log('패치된 데이터', response.data);
-      setMoviesTop({ data: response.data }); // API 응답을 moviesGenre 상태에 저장
+      setMoviesTop({ data: response.data });
     } catch (error) {
       console.error(
         '장르별 영화 데이터를 가져오는 중 오류가 발생했습니다:',
         error,
       );
-      setMoviesTop({ data: [] }); // 오류 발생 시 moviesGenre를 빈 배열로 초기화
+      setMoviesTop({ data: [] });
     }
   };
 

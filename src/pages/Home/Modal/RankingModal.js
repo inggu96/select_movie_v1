@@ -24,6 +24,18 @@ import { isLoginAtom } from '../../../state';
 // import Button from '../../Common/Button';
 import styles from './previewModal.module.scss';
 
+//   const {
+//     title,
+//     posterPath,
+//     runtime,
+//     releasedAt,
+//     overview,
+//     actors,
+//     genres,
+//     staffs,
+//     company,
+//   } = movieId;
+
 export const RankingModal = ({ open, onClose, movieId }) => {
   //   const navigate = useNavigate();
   //   const isLogin = useRecoilValue(isLoginAtom);
@@ -31,36 +43,35 @@ export const RankingModal = ({ open, onClose, movieId }) => {
   //   const [reviews, setReviews] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [movie, setMovie] = useState();
+  const {
+    voteAverage,
+    posterPath,
+    releaseDate,
+    title,
+    tmdbId,
+    overview,
+    movieGenres,
+    movieActors,
+    movieStaffs,
+  } = movie || {};
   let { id } = useParams();
 
   const fetchMovie = async () => {
     try {
-      const data = await getMovie(id);
-      setMovie(data);
+      const response = await getMovie(id);
+      setMovie(response.data);
+      console.log('response', response.data);
     } catch (error) {
       console.error('영화 정보를 가져오는 중 오류가 발생했습니다:', error);
     }
   };
-
-  const [movie, setMovie] = useState(null);
 
   useEffect(() => {
     fetchMovie();
     console.log('id', id);
     console.log('movie', movie);
   }, [open, movieId]);
-
-  //   const {
-  //     title,
-  //     posterPath,
-  //     runtime,
-  //     releasedAt,
-  //     overview,
-  //     actors,
-  //     genres,
-  //     staffs,
-  //     company,
-  //   } = movieId;
 
   //   const setUserName = (user) => {
   //     return user.nickName ?? user.name ?? '닉네임없음';
@@ -123,19 +134,19 @@ export const RankingModal = ({ open, onClose, movieId }) => {
 
   return (
     <Modal open={open}>
-      {/* <div className={styles.modal} /> */}
-      <div className={styles.popup}>
-        {/* <img className={styles.popupBackground} src={posterPath} /> */}
-        {/* <div>
-          <div className={styles.headerContentWrap}> */}
-        {/* <div className={styles.leftWrap}>
-              <img
-                className={styles.thumbUrl}
-                src={posterPath}
-                alt="detailPoster"
-              />
-              <div className={styles.buttonWrap}>
-                <Button
+      <div className={styles.modal}>
+        <div className={styles.popup}>
+          <img className={styles.popupBackground} src={posterPath} />
+          <div>
+            <div className={styles.headerContentWrap}>
+              <div className={styles.leftWrap}>
+                <img
+                  className={styles.thumbUrl}
+                  src={posterPath}
+                  alt="detailPoster"
+                />
+                <div className={styles.buttonWrap}>
+                  {/* <Button
                   name="isBookmarked"
                   option="secondary"
                   className={styles.button}
@@ -143,8 +154,8 @@ export const RankingModal = ({ open, onClose, movieId }) => {
                 >
                   {isBookmarked ? <SolidBookmarkIcon /> : <BookmarkIcon />}
                   북마크
-                </Button>
-                <Button
+                </Button> */}
+                  {/* <Button
                   option="secondary"
                   name="isLiked"
                   className={styles.button}
@@ -152,89 +163,102 @@ export const RankingModal = ({ open, onClose, movieId }) => {
                 >
                   {isLiked ? <SolidHeartIcon /> : <HeartIcon />}
                   좋아요
-                </Button>
+                </Button> */}
+                </div>
               </div>
-            </div> */}
-        {/* <div className={styles.rightWrap}> */}
-        {/* <header>
-                <span className={styles.title}>{title}</span>
-                <span className={styles.runtime}>{runtime}분 |</span>
-                <span>{dayjs(releasedAt).format('YYYY.MM.DD')}</span>
-              </header> */}
-        {/* <section className={styles.info}>
-                <article>
-                  <h3>장르</h3> */}
-        {/* <p className={styles.genres}>
-                    {genres.map((genre) => {
-                      return <span key={genre.id}>{genre.name}</span>;
-                    })}
-                  </p> */}
-        {/* </article>
-                <article>
-                  <h3>줄거리</h3> */}
-        {/* <p className={styles.plot}>{overview}</p> */}
-        {/* </article>
-                <article>
-                  <h3>출연</h3> */}
-        {/* <p className={styles.staffs}>
-                    {actors.map((actor) => {
-                      return <span key={actor.id}> {actor.name} </span>;
-                    })}
-                  </p> */}
-        {/* </article>
-                <article>
-                  <h3>제작 / 스태프</h3> */}
-        {/* <p className={styles.staffs}>
-                    <span> {company} | </span>
-                    {staffs.map((staff) => {
-                      return <span key={staff.id}>{staff.name}</span>;
-                    })}
-                  </p> */}
-        {/* </article>
-              </section>
+              <div className={styles.rightWrap}>
+                <header>
+                  <span className={styles.title}>{title}</span>
+                  {/* <span className={styles.runtime}>{runtime}분 |</span> */}
+                  <span>{dayjs(releaseDate).format('YYYY.MM.DD')}</span>
+                </header>
+                <section className={styles.info}>
+                  <article>
+                    <h3>장르</h3>
+                    <p className={styles.genres}>
+                      {movieGenres.map((movieGenre) => {
+                        return (
+                          <span key={movieGenre.genre.id}>
+                            {movieGenre.genre.name}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  </article>
+                  <article>
+                    <h3>줄거리</h3>
+                    <p className={styles.plot}>{overview}</p>
+                  </article>
+                  <article>
+                    <h3>출연</h3>
+                    <p className={styles.staffs}>
+                      {movieActors?.map((movieActor) => {
+                        return (
+                          <span key={movieActor.actor.id}>
+                            {movieActor.actor.name}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  </article>
+                  <article>
+                    <h3>제작 / 스태프</h3>
+                    <p className={styles.staffs}>
+                      {/* <span> {company} | </span> */}
+                      {movieStaffs.map((movieStaff) => {
+                        return (
+                          <span key={movieStaff.staff.id}>
+                            {movieStaff.staff.name}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  </article>
+                </section>
+              </div>
             </div>
           </div>
-        </div> */}
-        <p className={styles.close} onClick={onClose}>
-          <Close />
-        </p>
-        <div className={styles.moveSection}>
-          <div
-            className={styles.moveDetail}
-            onClick={() => {
-              navigate(`/detail/${movieId.id}`, {
-                to: true,
-              });
-            }}
-          >
-            <DoubleChevronRightIcon />
-            <p className={styles.moveText}>Detail Page</p>
+          <p className={styles.close} onClick={onClose}>
+            <Close />
+          </p>
+          <div className={styles.moveSection}>
+            <div
+              className={styles.moveDetail}
+              onClick={() => {
+                navigate(`/detail/${movieId.id}`, {
+                  to: true,
+                });
+              }}
+            >
+              <DoubleChevronRightIcon />
+              <p className={styles.moveText}>Detail Page</p>
+            </div>
           </div>
-        </div>
-        {/* {reviews.length === 0 && (
-          <div className={styles.emptyText}>
-            <p>텅</p>
-            <p>첫 리뷰를 남겨보세요✨</p>
-          </div>
-        )} */}
+          {/* {reviews.length === 0 && ( */}
+          {/* <div className={styles.emptyText}>
+                <p>텅</p>
+                <p>첫 리뷰를 남겨보세요✨</p>
+              </div> */}
+          {/* )} */}
 
-        {/* {reviews?.slice(0, 2).map((review, index) => {
-          return (
-            <Preview
-              key={index + review.user.id}
-              userName={setUserName(review.user)}
-              date={dayjs(review.createdAt).format('YYYY.MM.DD')}
-              comment={review.content}
-              rating={review.score}
-            />
-          );
-        })} */}
-        <div className={styles.starBox}>
-          <p className={styles.starTitle}>평균평점</p>
-          {/* <p className={styles.starNum}>
-            <SolidStarIcon className={styles.star} />
-            {movieId?.averageScore?.toFixed(1)}
-          </p> */}
+          {/* {reviews?.slice(0, 2).map((review, index) => {
+              return (
+                <Preview
+                  key={index + review.user.id}
+                  userName={setUserName(review.user)}
+                  date={dayjs(review.createdAt).format('YYYY.MM.DD')}
+                  comment={review.content}
+                  rating={review.score}
+                />
+              );
+            })} */}
+          <div className={styles.starBox}>
+            <p className={styles.starTitle}>평균평점</p>
+            <p className={styles.starNum}>
+              <SolidStarIcon className={styles.star} />
+              {voteAverage?.toFixed(1)}
+            </p>
+          </div>
         </div>
       </div>
     </Modal>

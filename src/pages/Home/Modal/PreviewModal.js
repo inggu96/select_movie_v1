@@ -232,7 +232,7 @@ export const PreviewModal = ({ open, onClose, movieId }) => {
             <div
               className={styles.moveDetail}
               onClick={() => {
-                navigate(`/detail/${movieId.id}`, {
+                navigate(`/detail/${id}`, {
                   to: true,
                 });
               }}

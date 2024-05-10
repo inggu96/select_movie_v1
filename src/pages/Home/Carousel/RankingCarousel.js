@@ -5,8 +5,8 @@ import styles from './carousel.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { getMovies } from '../../../api/Movies';
 import useModal from '../../../hooks/useModal';
-import { RankingModal } from '../Modal/RankingModal';
 import { RankingPoster } from '../Poster/RankingPoster';
+import { PreviewModal } from '../Modal/PreviewModal';
 
 export const RankingCarousel = () => {
   const [moviesTop, setMoviesTop] = useState({ data: [] });
@@ -32,7 +32,6 @@ export const RankingCarousel = () => {
   const onModalClick = (id) => {
     navigate(`/movies/${id}`);
     openModal();
-    const num = moviesTop.data.findIndex((item) => item.id === id);
     setMovieId(id);
   };
 
@@ -58,13 +57,8 @@ export const RankingCarousel = () => {
     <>
       <div className={styles.overlay}>
         <div>
-          {/* <RankingModal
-                onModalClose={onModalClose}
-                onModalClick={onModalClick}
-                movieId={moviesTop?.data}
-              /> */}
           {isModalOpen && (
-            <RankingModal open={isModalOpen} onClose={closeModal} />
+            <PreviewModal open={isModalOpen} onClose={closeModal} />
           )}
         </div>
       </div>

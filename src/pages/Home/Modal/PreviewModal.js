@@ -36,7 +36,7 @@ import styles from './previewModal.module.scss';
 //     company,
 //   } = movieId;
 
-export const RankingModal = ({ open, onClose, movieId }) => {
+export const PreviewModal = ({ open, onClose, movieId }) => {
   //   const navigate = useNavigate();
   //   const isLogin = useRecoilValue(isLoginAtom);
 
@@ -44,6 +44,8 @@ export const RankingModal = ({ open, onClose, movieId }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [movie, setMovie] = useState();
+  const navigate = useNavigate();
+
   const {
     voteAverage,
     posterPath,
@@ -57,16 +59,18 @@ export const RankingModal = ({ open, onClose, movieId }) => {
   } = movie || {};
   let { id } = useParams();
 
+  const goHome = () => {
+    onClose();
+    navigate('/');
+  };
+
   const fetchMovie = async () => {
     try {
       const response = await getMovie(id);
       setMovie(response.data);
       console.log('response', response.data);
     } catch (error) {
-      console.error(
-        '영화 정보를 가져오는 중 오류가 발생했습니111122211다:',
-        error,
-      );
+      console.error('영화 정보를 가져오는 중 오류가 발생했습니다:', error);
     }
   };
 
@@ -179,7 +183,7 @@ export const RankingModal = ({ open, onClose, movieId }) => {
                   <article>
                     <h3>장르</h3>
                     <p className={styles.genres}>
-                      {movieGenres.map((movieGenre) => {
+                      {movieGenres?.map((movieGenre) => {
                         return (
                           <span key={movieGenre.genre.id}>
                             {movieGenre.genre.name}
@@ -208,7 +212,7 @@ export const RankingModal = ({ open, onClose, movieId }) => {
                     <h3>제작 / 스태프</h3>
                     <p className={styles.staffs}>
                       {/* <span> {company} | </span> */}
-                      {movieStaffs.map((movieStaff) => {
+                      {movieStaffs?.map((movieStaff) => {
                         return (
                           <span key={movieStaff.staff.id}>
                             {movieStaff.staff.name}
@@ -221,7 +225,7 @@ export const RankingModal = ({ open, onClose, movieId }) => {
               </div>
             </div>
           </div>
-          <p className={styles.close} onClick={onClose}>
+          <p className={styles.close} onClick={goHome}>
             <Close />
           </p>
           <div className={styles.moveSection}>

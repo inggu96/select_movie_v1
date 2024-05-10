@@ -36,11 +36,9 @@ export const getMoviesUserLike = (userId) => {
 };
 
 // 영화 장르별로 불러오기
-export const getMoviesGenre = (page = 1, genreIds) => {
+export const getMoviesGenre = (genreIds) => {
   return apiClient.get(`/movies/genre`, {
     params: {
-      page,
-      limit: 20,
       genreIds,
     },
   });

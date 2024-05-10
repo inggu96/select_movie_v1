@@ -7,7 +7,14 @@ import Button from '../../../components/Common/Button';
 import { getMovie, postMovieLike, deleteMovieLike } from '../../../api/Movies';
 import { SolidStarIcon, HeartIcon, SolidHeartIcon } from '../../../assets/icon';
 
-export const CategoryPoster = ({ movie, onModalClick }) => {
+export const CategoryPoster = ({
+  title,
+  posterImage,
+  onModalClick,
+  id,
+  average,
+  movie,
+}) => {
   const isLogin = useRecoilValue(isLoginAtom);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -20,26 +27,25 @@ export const CategoryPoster = ({ movie, onModalClick }) => {
   //   }
   // };
 
-  const onClickLike = async (e) => {
-    if (!isLogin) {
-      return alert('로그인 후 이용 가능합니다!');
-    }
-    isLiked ? await deleteMovieLike(movie.id) : await postMovieLike(movie.id);
-    setIsLiked((cur) => !cur);
-  };
+  // const onClickLike = async (e) => {
+  //   if (!isLogin) {
+  //     return alert('로그인 후 이용 가능합니다!');
+  //   }
+  //   isLiked ? await deleteMovieLike(movie.id) : await postMovieLike(movie.id);
+  //   setIsLiked((cur) => !cur);
+  // };
 
-  const onClick = () => onModalClick(movie?.id);
+  // const onClick = () => onModalClick(movie?.id);
 
   // useEffect(() => {
   //   fetchMovieData();
   // }, [movie.id]);
-
   return (
     <article className={styles.wrapperH}>
       <div className={styles.screenH}>
         <article className={styles.layerUpH}>
-          <div className={styles.titleH} onClick={onClick}>
-            {movie?.title}
+          <div className={styles.titleH} onClick={() => onModalClick(id)}>
+            {title}
           </div>
           <div className={styles.bodyContentsH}>
             <div className={styles.ratingH}>
@@ -48,26 +54,20 @@ export const CategoryPoster = ({ movie, onModalClick }) => {
                 height={'30px'}
                 fill="yellow"
               />
-              <p className={styles.starNumH}>
-                {movie.averageScore?.toFixed(1)}
-              </p>
+              <p className={styles.starNumH}>{average?.toFixed(1)}</p>
             </div>
-            <Button
+            {/* <Button
               option="third"
               name="isLiked"
               className={styles.iconH}
               onClick={onClickLike}
             >
               {isLiked ? <SolidHeartIcon /> : <HeartIcon />}
-            </Button>
+            </Button> */}
           </div>
         </article>
         <article className={styles.layerDownH}>
-          <img
-            className={styles.postImageH}
-            src={movie?.poster_path}
-            alt={movie?.title}
-          />
+          <img className={styles.postImageH} src={posterImage} alt={title} />
         </article>
       </div>
     </article>

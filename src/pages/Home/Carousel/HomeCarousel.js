@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import PreviewModal from '../../../components/Carousel/PreviewModal';
 import styles from './carousel.module.scss';
 
 import { getMoviesGenre } from '../../../api/Movies';
 
 import { CaretLeftIcon, CaretRightIcon } from '../../../assets/icon';
 import { CategoryPoster } from '../Poster/CategoryPoster';
+import { useNavigate } from 'react-router-dom';
+import useModal from '../../../hooks/useModal';
+import { PreviewModal } from '../Modal/PreviewModal';
 
 export const HomeCarousel = ({ GenreId }) => {
   // 모달 관련 변수
   const [isShow, setIsShow] = useState(false);
   const [moviesGenre, setMoviesGenre] = useState({ data: [] });
   const [movieId, setMovieId] = useState(null);
+  const navigate = useNavigate();
   const onModalClose = () => setIsShow(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const fetchMoviesGenre = async () => {
     try {
-      const response = await getMoviesGenre(1, GenreId);
+      const response = await getMoviesGenre(GenreId);
       console.log('responseAction', response.data);
       setMoviesGenre({ data: response.data });
     } catch (error) {
@@ -28,10 +32,11 @@ export const HomeCarousel = ({ GenreId }) => {
       setMoviesGenre({ data: [] });
     }
   };
+
   const onModalClick = (id) => {
-    const num = moviesGenre.data.findIndex((item) => item.id === id);
-    setIsShow(true);
-    setMovieId(moviesGenre.data[num]);
+    navigate(`/movies/${id}`);
+    openModal();
+    setMovieId(id);
   };
 
   const settings = {
@@ -51,25 +56,23 @@ export const HomeCarousel = ({ GenreId }) => {
 
   return (
     <>
-      {isShow && (
-        <div className={styles.overlay}>
-          <div>
-            <PreviewModal
-              onModalClose={onModalClose}
-              onModalClick={onModalClick}
-              movieId={movieId}
-            />
-          </div>
+      <div className={styles.overlay}>
+        <div>
+          {isModalOpen && (
+            <PreviewModal open={isModalOpen} onClose={closeModal} />
+          )}
         </div>
-      )}
+      </div>
       <Slider {...settings}>
         {moviesGenre?.data.map((movie) => (
           <CategoryPoster
             key={movie.id}
-            movie={movie}
+            title={movie.title}
+            id={movie.id}
+            movieId={movie.id}
+            posterImage={movie.posterPath}
+            average={movie.voteAverage}
             onModalClick={() => onModalClick(movie.id)}
-            movieId={movieId}
-            callback={fetchMoviesGenre}
           />
         ))}
       </Slider>

@@ -8,8 +8,8 @@ import useMe from '../../../hooks/useMe';
 import styles from './header.module.scss';
 
 const Header = () => {
-  // const navigate = useNavigate(); // useNaviagte 로그인 및 마이페이지 이동위해 사용
-  // const { me } = useMe();
+  const navigate = useNavigate(); // useNaviagte 로그인 및 마이페이지 이동위해 사용
+  const { me } = useMe();
 
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const [keyword, setKeyword] = useState('');
@@ -34,13 +34,13 @@ const Header = () => {
   //   setKeyword('');
   // };
 
-  // useEffect(() => {
-  //   if (me) {
-  //     setIsLogin(true);
-  //   } else {
-  //     setIsLogin(false);
-  //   }
-  // }, [me]);
+  useEffect(() => {
+    if (me) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [me]);
 
   return (
     <header className={styles.wrap}>

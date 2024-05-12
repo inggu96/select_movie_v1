@@ -50,36 +50,30 @@ const Login = () => {
     }
 
     try {
-      //NOTE: 로그인 성공
-      //NOTE: 로그인 API 호출
       const response = await login({
         email: userId,
         password,
       });
+      console.log('Login response:', response.data); // 로그인 응답 로그 출력
 
-      if (response.data) {
-        const { accessToken, refreshToken } = response.data;
-        //NOTE: 토큰 저장
-        localStorage.setItem('ACCESS_TOKEN', accessToken);
-        localStorage.setItem('REFRESH_TOKEN', refreshToken);
-
-        console.log(response.data);
-
+      const { access_token: accessToken, refresh_token: refreshToken } =
+        response.data;
+      console.log('Access Token:', accessToken);
+      console.log('Refresh Token:', refreshToken);
+      if (accessToken && refreshToken) {
+        localStorage.setItem('access_token', accessToken);
+        localStorage.setItem('refresh_token', refreshToken);
         setIsLogin(true);
-
-        if (!location.state) {
-          navigate(-1);
-        }
-
-        if (location.state.prev === 'register') {
-          navigate('/');
-        } else {
-          navigate(-1);
-        }
+        navigate(location.state?.prev ?? '/');
+      } else {
+        console.error('No tokens received');
       }
-    } catch (err) {
-      const errData = err.response?.data;
-      alert(errData.message);
+    } catch (error) {
+      console.error('Login Error:', error.response?.data);
+      setErr({
+        ...err,
+        global: error.response?.data?.message || '로그인에 실패했습니다.',
+      });
     }
   };
 

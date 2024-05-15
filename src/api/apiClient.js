@@ -4,6 +4,9 @@ import config from '../config';
 const apiClient = axios.create({
   baseURL: config.API_URL,
   timeout: 5_000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 apiClient.interceptors.request.use(async (config) => {
   const accessToken = localStorage.getItem('access_token');
@@ -11,6 +14,9 @@ apiClient.interceptors.request.use(async (config) => {
   if (accessToken) {
     config.headers['Authorization'] = `Bearer ${accessToken}`;
   }
+  (error) => {
+    return Promise.reject(error);
+  };
 
   return config;
 });

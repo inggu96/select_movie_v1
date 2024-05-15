@@ -6,8 +6,8 @@ export const getUsersCount = () => {
 };
 
 // 나의 정보 불러오기
-export const getUsersMe = () => {
-  return apiClient.get(`/users/me`);
+export const getUserMe = () => {
+  return apiClient.get(`/user/me`);
 };
 
 // 나의 추가 정보 불러오기 [좋아요, 리뷰 개수, 별점]

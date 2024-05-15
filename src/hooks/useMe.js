@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
-import { getUsersMe } from '../api/Users';
+import { getUserMe } from '../api/Users';
 
-const useMe = () => {
-
+const useMe = (isLogin) => {
   const [me, setMe] = useState(null);
 
   const onGetMe = async () => {
-    const me = await getUsersMe();
+    const me = await getUserMe();
     if (me.data) {
       setMe(me.data);
     }
   };
 
   useEffect(() => {
-    onGetMe();
-  }, []);
+    if (isLogin) {
+      onGetMe();
+    }
+  }, [isLogin]);
 
   return { me, onGetMe };
 };

@@ -9,9 +9,8 @@ import styles from './header.module.scss';
 
 const Header = () => {
   const navigate = useNavigate(); // useNaviagte 로그인 및 마이페이지 이동위해 사용
-  const { me } = useMe();
-
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
+  const { me } = useMe(isLogin);
   const [keyword, setKeyword] = useState('');
 
   const goMy = () => navigate('/my');
@@ -40,7 +39,7 @@ const Header = () => {
     } else {
       setIsLogin(false);
     }
-  }, [me]);
+  }, [me, setIsLogin]);
 
   return (
     <header className={styles.wrap}>

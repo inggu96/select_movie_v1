@@ -12,7 +12,6 @@ const Footer = () => {
     <footer className={cx(styles.wrap, { [styles.fixed]: needFixed })}>
       <div className={styles.left}>
         <p className={styles.logo}>무비셀렉터</p>
-        <p>1팀 : 이인국, 주양아, 신현중, 구성미</p>
       </div>
       <div className={styles.right}>
         <p>codestates @2023 cooperation</p>

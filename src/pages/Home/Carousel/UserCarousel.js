@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
-import { getBookmarksPage, getUserBookmarksPage } from '../../../api/Bookmarks';
+import {
+  getBookmarkedMovies,
+  getBookmarksPage,
+  getUserBookmarksPage,
+} from '../../../api/Bookmarks';
 import { PosterUser } from '../../../components/Carousel/PosterUser';
 
 import { getMoviesMeLike, getMoviesUserLike } from '../../../api/Movies';
@@ -30,18 +34,18 @@ export const UserCarousel = ({ name }) => {
     setMyLike(response.data);
   };
   const fetchMoviesMark = async () => {
-    const response = await getBookmarksPage(1, 20);
-    setMyMark(response.data.data);
+    const response = await getBookmarkedMovies();
+    setMyMark(response.data);
   };
 
-  const fetchUserLike = async () => {
-    const response = await getMoviesUserLike(userId.id);
-    setUserLike(response.data);
-  };
-  const fetchUserBookmark = async () => {
-    const response = await getUserBookmarksPage(userId.id);
-    setUserMark(response.data);
-  };
+  // const fetchUserLike = async () => {
+  //   const response = await getMoviesUserLike(userId.id);
+  //   setUserLike(response.data);
+  // };
+  // const fetchUserBookmark = async () => {
+  //   const response = await getUserBookmarksPage(userId.id);
+  //   setUserMark(response.data);
+  // };
 
   const settings = {
     dots: false,
@@ -57,8 +61,8 @@ export const UserCarousel = ({ name }) => {
   useEffect(() => {
     isMyPage && fetchMoviesLike();
     isMyPage && fetchMoviesMark();
-    isUserPage && fetchUserLike();
-    isUserPage && fetchUserBookmark();
+    // isUserPage && fetchUserLike();
+    // isUserPage && fetchUserBookmark();
   }, []);
 
   return (
@@ -81,20 +85,19 @@ export const UserCarousel = ({ name }) => {
       {name === 'myMark' && (
         <div name="myMark">
           <Slider {...settings}>
-            {myMark &&
-              myMark?.map((index) => (
-                <PosterUser
-                  type="mark"
-                  key={index.movie}
-                  index={index.movie}
-                  callback={fetchMoviesMark}
-                />
-              ))}
+            {myMark?.map((index) => (
+              <PosterUser
+                type="mark"
+                key={index.id}
+                index={index}
+                callback={fetchMoviesMark}
+              />
+            ))}
           </Slider>
         </div>
       )}
 
-      {name === 'userLike' && (
+      {/* {name === 'userLike' && (
         <div>
           <Slider {...settings}>
             {userLike.map((index) => (
@@ -122,7 +125,7 @@ export const UserCarousel = ({ name }) => {
             ))}
           </Slider>
         </div>
-      )}
+      )} */}
     </>
   );
 };

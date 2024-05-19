@@ -16,16 +16,15 @@ export const getBookmarksPage = (page = 1, limit = 20) => {
 };
 
 /**  다른 유저가 북마크한 영화 조회. */
-export const getUserBookmarksPage = (userId) => {
-  return apiClient.get(`/bookmarks/users/${userId}`);
+export const getBookmarkedMovies = () => {
+  return apiClient.get('/movies/bookmarks');
 };
 
 /** 영화 북마크 생성 */
-export const postBookmark = (movieId) => {
-  return apiClient.post(`/bookmarks/${movieId}`);
+export const postBookmark = (id) => {
+  return apiClient.post(`/movies/${id}/bookmarks`);
 };
-
 /** 영화 북마크 삭제 */
-export const deleteBookmark = (movieId) => {
-  return apiClient.delete(`/bookmarks/${movieId}`);
+export const deleteBookmark = (id) => {
+  return apiClient.delete(`/movies/${id}/bookmarks`);
 };

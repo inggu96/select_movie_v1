@@ -124,12 +124,10 @@ export const PreviewModal = ({ open, onClose, movieId }) => {
       setIsLiked((cur) => !cur);
     }
 
-    // if (name === 'isBookmarked') {
-    //   isBookmarked
-    //     ? await deleteBookmark(movieId.id)
-    //     : await postBookmark(movieId.id);
-    //   setIsBookmarked((cur) => !cur);
-    // }
+    if (name === 'isBookmarked') {
+      isBookmarked ? await deleteBookmark(id) : await postBookmark(id);
+      setIsBookmarked((cur) => !cur);
+    }
   };
 
   //   useEffect(() => {
@@ -152,15 +150,15 @@ export const PreviewModal = ({ open, onClose, movieId }) => {
                   alt="detailPoster"
                 />
                 <div className={styles.buttonWrap}>
-                  {/* <Button
-                  name="isBookmarked"
-                  option="secondary"
-                  className={styles.button}
-                  onClick={onClickButton}
-                >
-                  {isBookmarked ? <SolidBookmarkIcon /> : <BookmarkIcon />}
-                  북마크
-                </Button> */}
+                  <Button
+                    name="isBookmarked"
+                    option="secondary"
+                    className={styles.button}
+                    onClick={onClickButton}
+                  >
+                    {isBookmarked ? <SolidBookmarkIcon /> : <BookmarkIcon />}
+                    북마크
+                  </Button>
                   <Button
                     option="secondary"
                     name="isLiked"

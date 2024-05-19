@@ -15,13 +15,13 @@ const MyPage = () => {
         <p className={styles.textWrap}>
           <span className={styles.text}>좋아하는 컨텐츠</span>
         </p>
-        {/* <UserCarousel name="myLike" /> */}
+        <UserCarousel name="myLike" />
       </article>
       <article className={styles.carousel}>
         <p className={styles.textWrap}>
           <span className={styles.text}>북마크 한 컨텐츠</span>
         </p>
-        {/* <UserCarousel name="myMark" /> */}
+        <UserCarousel name="myMark" />
       </article>
       <article className={styles.carousel}>
         <p className={styles.textWrap}>

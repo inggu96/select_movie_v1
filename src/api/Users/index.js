@@ -12,7 +12,7 @@ export const getUserMe = () => {
 
 // 나의 추가 정보 불러오기 [좋아요, 리뷰 개수, 별점]
 export const getUsersMeInfo = () => {
-  return apiClient.get(`/users/me/info`);
+  return apiClient.get(`/user/me/info`);
 };
 // data: averageScore: null, reviewCount: 0, likeCount: 0
 
@@ -28,9 +28,12 @@ export const getUsers = (page, limit, name) => {
 };
 
 //유저 수정하기 (Users)
-export const patchUser = (body) => {
-  return apiClient.patch(`/users`, body);
+export const patchUser = (user) => {
+  return apiClient.patch(`/user/me/info`, user);
 };
+// export const patchUser = (body) => {
+//   return apiClient.patch(`/users`, body);
+// };
 //유저 수정하기 (관리자)
 export const patchUserAdmin = (id, body) => {
   return apiClient.patch(`/users/${id}`, body);

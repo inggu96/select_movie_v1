@@ -9,7 +9,7 @@ import { UserCarousel } from '../Home/Carousel/UserCarousel';
 const MyPage = () => {
   return (
     <section className={styles.wrap}>
-      {/* <Info /> */}
+      <Info />
       {/* <InfoDetail /> */}
       <article className={styles.carousel}>
         <p className={styles.textWrap}>

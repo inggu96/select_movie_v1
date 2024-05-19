@@ -10,18 +10,18 @@ const Info = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const showModal = () => setModalOpen(true);
-  const fetchUserInfo = async () => await getUsersMeInfo();
+  // const fetchUserInfo = async () => await getUsersMeInfo();
 
   //모달
   const closeModal = () => {
     setModalOpen(false);
-    fetchUserInfo();
+    // fetchUserInfo();
     onGetMe();
   };
 
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
+  // useEffect(() => {
+  //   fetchUserInfo();
+  // }, []);
 
   return (
     <section className={styles.info}>
@@ -49,7 +49,7 @@ const Info = () => {
           closeModal={closeModal}
           notion="소개글 수정"
           buttonChildren="완료"
-          callback={fetchUserInfo}
+          // callback={fetchUserInfo}
         />
       </div>
     </section>

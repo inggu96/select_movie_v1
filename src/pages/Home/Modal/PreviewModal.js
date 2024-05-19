@@ -19,6 +19,7 @@ import {
   SolidHeartIcon,
   SolidStarIcon,
 } from '../../../assets/icon';
+import { Button } from '../../../components';
 import { isLoginAtom } from '../../../state';
 // import { Preview } from '../../Comment';
 // import Button from '../../Common/Button';
@@ -38,7 +39,7 @@ import styles from './previewModal.module.scss';
 
 export const PreviewModal = ({ open, onClose, movieId }) => {
   //   const navigate = useNavigate();
-  //   const isLogin = useRecoilValue(isLoginAtom);
+  const isLogin = useRecoilValue(isLoginAtom);
 
   //   const [reviews, setReviews] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
@@ -78,7 +79,7 @@ export const PreviewModal = ({ open, onClose, movieId }) => {
     fetchMovie();
     console.log('id', id);
     console.log('movie', movie);
-  }, [open, movieId]);
+  }, [open]);
 
   //   const setUserName = (user) => {
   //     return user.nickName ?? user.name ?? '닉네임없음';
@@ -112,26 +113,24 @@ export const PreviewModal = ({ open, onClose, movieId }) => {
   //     }
   //   };
 
-  //   const onClickButton = async (e) => {
-  //     if (!isLogin) {
-  //       return alert('로그인 후 이용 가능합니다!');
-  //     }
-  //     const { name } = e.currentTarget;
+  const onClickButton = async (e) => {
+    if (!isLogin) {
+      return alert('로그인 후 이용 가능합니다!');
+    }
+    const { name } = e.currentTarget;
 
-  //     if (name === 'isLiked') {
-  //       isLiked
-  //         ? await deleteMovieLike(movieId.id)
-  //         : await postMovieLike(movieId.id);
-  //       setIsLiked((cur) => !cur);
-  //     }
+    if (name === 'isLiked') {
+      isLiked ? await deleteMovieLike(id) : await postMovieLike(id);
+      setIsLiked((cur) => !cur);
+    }
 
-  //     if (name === 'isBookmarked') {
-  //       isBookmarked
-  //         ? await deleteBookmark(movieId.id)
-  //         : await postBookmark(movieId.id);
-  //       setIsBookmarked((cur) => !cur);
-  //     }
-  //   };
+    // if (name === 'isBookmarked') {
+    //   isBookmarked
+    //     ? await deleteBookmark(movieId.id)
+    //     : await postBookmark(movieId.id);
+    //   setIsBookmarked((cur) => !cur);
+    // }
+  };
 
   //   useEffect(() => {
   //     fetchMovieData();
@@ -162,15 +161,15 @@ export const PreviewModal = ({ open, onClose, movieId }) => {
                   {isBookmarked ? <SolidBookmarkIcon /> : <BookmarkIcon />}
                   북마크
                 </Button> */}
-                  {/* <Button
-                  option="secondary"
-                  name="isLiked"
-                  className={styles.button}
-                  onClick={onClickButton}
-                >
-                  {isLiked ? <SolidHeartIcon /> : <HeartIcon />}
-                  좋아요
-                </Button> */}
+                  <Button
+                    option="secondary"
+                    name="isLiked"
+                    className={styles.button}
+                    onClick={onClickButton}
+                  >
+                    {isLiked ? <SolidHeartIcon /> : <HeartIcon />}
+                    좋아요
+                  </Button>
                 </div>
               </div>
               <div className={styles.rightWrap}>

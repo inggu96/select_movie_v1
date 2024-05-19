@@ -22,10 +22,10 @@ const dropdownItems = [
 
 const Detail = () => {
   const navigate = useNavigate();
-  // const { id } = useParams();
-  // const { me } = useMe();
+  const { id } = useParams();
+  const { me } = useMe();
   // const ref = useRef(null);
-  // const isLogin = useRecoilValue(isLoginAtom);
+  const isLogin = useRecoilValue(isLoginAtom);
 
   const [relatedMovies, setRelatedMovies] = useState(); // 관련 영화가 들어있는 배열
   const [reviews, setReviews] = useState([]); // review 객체가 들어있는 배열
@@ -42,27 +42,27 @@ const Detail = () => {
   };
 
   // 해당 영화 리뷰 fetch
-  // const fetchReviews = async () => {
-  //   const response = await getReviewsMovie(id, orderBy.value);
-  //   setReviews(response.data);
-  // };
+  const fetchReviews = async () => {
+    const response = await getReviewsMovie(id, orderBy.value);
+    setReviews(response.data);
+  };
 
   // 로그인 상태에 따라 reviewInput의 placeholder 변경
-  // const inputPlaceholder = () => {
-  //   return isLogin
-  //     ? '10자 이상 입력 시 등록 가능합니다.'
-  //     : '로그인 후 작성하실 수 있습니다.';
-  // };
+  const inputPlaceholder = () => {
+    return isLogin
+      ? '10자 이상 입력 시 등록 가능합니다.'
+      : '로그인 후 작성하실 수 있습니다.';
+  };
 
   // 로그인 상태에 따라 reviewInput의 userName 변경
-  // const inputUsername = () => {
-  //   if (me && isLogin) {
-  //     return me.nickname ?? me.name;
-  //   }
-  //   if (!me || !isLogin) {
-  //     return '로그인 후 작성가능';
-  //   }
-  // };
+  const inputUsername = () => {
+    if (me && isLogin) {
+      return me.nickname ?? me.name;
+    }
+    if (!me || !isLogin) {
+      return '로그인 후 작성가능';
+    }
+  };
 
   // aside > RelatedCard 클릭 이벤트
   // const navigateOtherMovie = (movieId) => {
@@ -87,9 +87,10 @@ const Detail = () => {
   //   fetchReviews();
   // }, [id]);
 
-  // useEffect(() => {
-  //   fetchReviews();
-  // }, [orderBy]);
+  useEffect(() => {
+    fetchReviews();
+    console.log('reviews', reviews);
+  }, [orderBy]);
 
   return (
     <main>
@@ -100,12 +101,12 @@ const Detail = () => {
           <main className={styles.mainWrap}>
             {/* 영화 리뷰를 입력하는 input  */}
             <ReviewInput
-            // id={id}
-            // disabled={!isLogin}
-            //NOTE: props로 넘기는 함수 / 값 => 함수 : useCallback, 값 : useMemo
-            // placeholder={inputPlaceholder()}
-            // fetchReviews={fetchReviews}
-            // userName={inputUsername()}
+              id={id}
+              disabled={!isLogin}
+              //NOTE: props로 넘기는 함수 / 값 => 함수 : useCallback, 값 : useMemo
+              placeholder={inputPlaceholder()}
+              fetchReviews={fetchReviews}
+              userName={inputUsername()}
             />
             <header>
               <h1>Reviews</h1>
@@ -117,25 +118,30 @@ const Detail = () => {
               /> */}
             </header>
 
-            {/* <article className={styles.reviewsWrap}>
-              {reviews.length === 0 && (
+            <article className={styles.reviewsWrap}>
+              {!reviews && (
+                <div className={styles.empty}>
+                  <p>텅</p>
+                  <p>첫 리뷰를 남겨보세요✨</p>
+                </div>
+              )}
+              {reviews && reviews.length === 0 && (
                 <div className={styles.empty}>
                   <p>텅</p>
                   <p>첫 리뷰를 남겨보세요✨</p>
                 </div>
               )}
               {reviews &&
-                reviews.map((review) => {
+                reviews?.map((review) => {
                   return (
                     <Accordion
                       review={review}
                       key={review.id}
-                      movieId={id}
                       fetchReviews={fetchReviews}
                     />
                   );
                 })}
-            </article> */}
+            </article>
           </main>
 
           {/* 리뷰(main) 옆에 위치하고 있는 '관련 영화'  */}

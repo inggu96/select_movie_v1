@@ -6,7 +6,6 @@ import {
   getBookmarksPage,
   getUserBookmarksPage,
 } from '../../../api/Bookmarks';
-import { PosterUser } from '../../../components/Carousel/PosterUser';
 
 import { getMoviesMeLike, getMoviesUserLike } from '../../../api/Movies';
 import styles from './carousel.module.scss';
@@ -16,6 +15,7 @@ import {
   SolidBookmarkIcon,
   SolidHeartIcon,
 } from '../../../assets/icon';
+import { PosterUser } from '../../User/PosterUser';
 
 export const UserCarousel = ({ name }) => {
   const location = useLocation();
@@ -61,6 +61,7 @@ export const UserCarousel = ({ name }) => {
   useEffect(() => {
     isMyPage && fetchMoviesLike();
     isMyPage && fetchMoviesMark();
+    console.log('myLike', myLike);
     // isUserPage && fetchUserLike();
     // isUserPage && fetchUserBookmark();
   }, []);

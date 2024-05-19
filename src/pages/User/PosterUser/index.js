@@ -57,7 +57,7 @@ export const PosterUser = ({ type, index, callback }) => {
         <article className={styles.layerDown} onClick={onClickPoster}>
           <img
             className={styles.postImage}
-            src={index?.postImage}
+            src={index?.posterPath}
             alt={index?.title}
           />
         </article>

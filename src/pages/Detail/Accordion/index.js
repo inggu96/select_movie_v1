@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { createReviewComment } from '../../../api/Reviews';
 import { Comment, Review } from '../../../components/Comment';
 
-const Accordion = ({ review, movieId, fetchReviews }) => {
+const Accordion = ({ review, fetchReviews }) => {
   const { me } = useMe();
   const isLogin = useRecoilValue(isLoginAtom);
   const navigate = useNavigate();
@@ -59,7 +59,6 @@ const Accordion = ({ review, movieId, fetchReviews }) => {
         rating={review.score}
         reviewId={review.id}
         written={review.user.id}
-        movieId={movieId}
         fetchReviews={fetchReviews}
       />
 
@@ -87,35 +86,35 @@ const Accordion = ({ review, movieId, fetchReviews }) => {
       )}
 
       {/* 댓글 accordion */}
-      {review.comments.length === 0 || (
-        <>
-          <button
+      {/* {reviewComments.length === 0 || ( */}
+      <>
+        {/* <button
             className={cx(styles.showCommentsButton, {
               [styles.isShow]: isClicked,
             })}
             onClick={onClickCommentAccordion}
           >
-            댓글 {review.comments.length}
+            댓글 {reviewComments.length}
             <ChevronUp />
-          </button>
+          </button> */}
 
-          <article className={styles.commentWrap}>
-            {reviewComments.map((comment) => {
-              return (
-                <Comment
-                  key={comment.id}
-                  comment={comment.content}
-                  userName={setUserName(comment.user)}
-                  date={dayjs(comment.createdAt).format('YYYY.MM.DD')}
-                  commentId={comment.id}
-                  written={comment.user.id}
-                  fetchReviews={fetchReviews}
-                />
-              );
-            })}
-          </article>
-        </>
-      )}
+        <article className={styles.commentWrap}>
+          {reviewComments?.map((comment) => {
+            return (
+              <Comment
+                key={comment.id}
+                comment={comment.content}
+                userName={setUserName(comment.user)}
+                date={dayjs(comment.createdAt).format('YYYY.MM.DD')}
+                commentId={comment.id}
+                written={comment.user.id}
+                fetchReviews={fetchReviews}
+              />
+            );
+          })}
+        </article>
+      </>
+      {/* )} */}
     </li>
   );
 };
